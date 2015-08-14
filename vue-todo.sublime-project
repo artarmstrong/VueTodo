@@ -2,7 +2,20 @@
 	"folders":
 	[
 		{
-			"path": "."
-		}
+            "path": "js",
+            "name": "JS",
+            "file_include_patterns": ["*.js"]
+        },
+		{
+            "path": "css",
+            "name": "CSS",
+            "file_include_patterns": ["*.css"]
+        },
+        {
+            "path": "/",
+            "name": "Files",
+            "folder_exclude_patterns": ["*"],
+            "file_exclude_patterns": ["*.sublime-project","*.sublime-workspace"]
+        }
 	]
 }
