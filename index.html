@@ -3,24 +3,108 @@
 <head>
 	<meta charset="UTF-8">
 	<title>VueTodo</title>
-	<script type="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/app.css">
 </head>
 <body>
 
-	<div class=".container">
+	<div class="container">
 		<div id="tasks">
 			
-			<div>
-				<h1>Tasks</h1>
+			<div v-show="remaining.length">
+				<h1>Tasks ({{ remaining.length }})</h1>
 				<ol class="list-group">
-				  <li v-repeat="task: tasks">{{ task.body }}
+				  <li 
+				  	class="list-group-item" 
+				  	v-repeat="task in tasks | inProcess">
+				  	<input 	
+				  		v-on="click: completeTask(task)"
+				  		type="checkbox" />
+				  	<span v-on="click: editTask(task)">{{ task.body }}</span>
+					<div class="todo-buttons btn-group pull-right" role="group">
+						<button 
+							type="button" 
+							class="btn btn-default btn-xs move-item" 
+							data-pk="6" 
+							aria-label="Remove">
+							<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+						</button>
+						<button 
+							v-on="click: removeTask(task)"
+							type="button" 
+							class="btn btn-default btn-xs remove-item"  
+							data-pk="6" 
+							aria-label="Remove">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						</button>
+					</div>
+				  </li>
 				</ol>
+			</div>
+
+			<form v-on="submit: addTask">
+				
+				<div class="form-group">
+					<input 	
+						type="text"
+						v-model="newTask"
+						v-el="newTask"
+						class="form-control" 
+						placeholder="I need to..." />
+				</div>
+
+				<button class="btn btn-primary">Add Task</button>
+				<button 
+					v-on="click: completeAll"
+					class="btn btn-default"
+				>Mark All As Complete</button>
+
+			</form>
+
+			<div v-if="completions.length">
+				<h2>Completed ({{ completions.length }})</h2>
+				<ol class="list-group">
+					<li 
+						v-repeat="task in tasks | filterBy true in completed"
+						class="list-group-item"
+					>
+						<input 	
+				  			v-on="click: uncompleteTask(task)"
+				  			type="checkbox" 
+				  			checked="checked" 
+				  		/>
+						{{ task.body }}
+						<div class="todo-buttons btn-group pull-right" role="group">
+							<button 
+								type="button" 
+								class="btn btn-default btn-xs move-item" 
+								data-pk="6" 
+								aria-label="Remove">
+								<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+							</button>
+							<button 
+								v-on="click: removeTask(task)"
+								type="button" 
+								class="btn btn-default btn-xs remove-item"  
+								data-pk="6" 
+								aria-label="Remove">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							</button>
+						</div>
+					</li>
+				</ol>
+
+				<button 
+					v-on="click: completeCompleted"
+					class="btn btn-danger"
+				>Delete All Completed</button>
+
 			</div>
 
 		</div>
 	</div>
 
-	<script type="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.10/vue.min.js"></script>
-	<script type="js/app.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.10/vue.min.js"></script>
+	<script src="js/app.js"></script>
 </body>
 </html>
