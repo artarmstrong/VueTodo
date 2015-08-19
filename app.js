@@ -19,14 +19,6 @@ new Vue({
 		},
 	},
 
-	filters: {
-		inProcess: function(tasks) {
-			return tasks.filter(function(task) {
-				return ! task.completed;
-			});
-		}
-	},
-
 	methods: {
 		addTask: function(e) {
 			e.preventDefault();
@@ -47,16 +39,6 @@ new Vue({
 		},
 		uncompleteTask: function(task) {
 			task.completed = false;
-		},
-		completeAll: function() {
-			this.tasks.forEach(function(task) {
-				task.completed = true;
-			});
-		},
-		completeCompleted: function() {
-			this.tasks = this.tasks.filter(function(task) {
-				return ! task.completed;
-			});
 		},
 		removeTask: function(task) {
 			this.tasks.$remove(task);

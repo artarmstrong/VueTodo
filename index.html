@@ -10,68 +10,105 @@
 
 	<div class="container">
 
-		<div class="row">
+		<div class="row" id="tasks">
 			<div class="col-md-6 col-md-offset-3">
 
 				<h1 class="text-center">ToDo's</h1>
 
-				<div class="input-group">
-					<input type="text" class="form-control" id="add-todo" placeholder="Item Details">
-					<span class="input-group-btn">
-						<button class="btn btn-primary" id="add-todo-submit" type="button">Add Item!</button>
-					</span>
-				</div>
+				<form
+				v-on="submit: addTask">
+					<div class="input-group">
+						<input 
+						type="text" 
+						class="form-control" 
+						id="add-todo" 
+						placeholder="Item Details"
+						v-model="newTask"
+						v-el="newTask">
+						<span class="input-group-btn">
+							<button 
+							class="btn btn-primary" 
+							type="submit">Add Item!</button>
+						</span>
+					</div>
 
-				<br />
+					<br />
+				</form>
 
-			    <table class="table table-striped">
+			    <table 
+			    class="table table-striped" 
+			    v-show="remaining.length">
 					<tbody>
-						<tr>
+						<tr v-repeat="task in tasks | filterBy false in completed">
 							<td>
-								<input type="checkbox">
+								<input 	
+				  				v-on="click: completeTask(task)"
+				  				type="checkbox" />
+								<strong>{{ task.body }}</strong>
 							</td>
-							<td>Todo text goes here</td>
 							<td>
-								<div class="todo-buttons btn-group pull-right" role="group">
-				                    <button type="button" class="btn btn-default btn-xs move-item" data-pk="6" aria-label="Remove">
-				                    	<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+								<div class="todo-buttons pull-right">
+				                    <button 
+				                    type="button" 
+				                    class="btn btn-success btn-xs" 
+				                    data-pk="6"
+				                    v-on="click: editTask(task)">
+				                    	<span class="glyphicon glyphicon-pencil"></span>
 				                    </button>
-				                    <button type="button" class="btn btn-default btn-xs remove-item" data-pk="6" aria-label="Remove">
-				                     	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				                    <button 
+				                    type="button" 
+				                    class="btn btn-primary btn-xs move-item" 
+				                    data-pk="6">
+				                    	<span class="glyphicon glyphicon-menu-hamburger"></span>
+				                    </button>
+				                    <button 
+				                    type="button" 
+				                    class="btn btn-danger btn-xs remove-item" 
+				                    data-pk="6"
+				                    v-on="click: removeTask(task)">
+				                     	<span class="glyphicon glyphicon-trash"></span>
+				                    </button>
+			                  	</div>
+							</td>
+						</tr>
+						<tr v-repeat="task in tasks | filterBy true in completed">
+							<td>
+								<input
+								type="checkbox"
+								checked="checked"
+				  				v-on="click: uncompleteTask(task)" />
+								<s>{{ task.body }}</s>
+							</td>
+							<td>
+								<div class="todo-buttons pull-right">
+				                    <button 
+				                    type="button" 
+				                    class="btn btn-success btn-xs" 
+				                    data-pk="6"
+				                    v-on="click: editTask(task)">
+				                    	<span class="glyphicon glyphicon-pencil"></span>
+				                    </button>
+				                    <button 
+				                    type="button" 
+				                    class="btn btn-primary btn-xs move-item" 
+				                    data-pk="6">
+				                    	<span class="glyphicon glyphicon-menu-hamburger"></span>
+				                    </button>
+				                    <button 
+				                    type="button" 
+				                    class="btn btn-danger btn-xs remove-item" 
+				                    data-pk="6"
+				                    v-on="click: removeTask(task)">
+				                     	<span class="glyphicon glyphicon-trash"></span>
 				                    </button>
 			                  	</div>
 							</td>
 						</tr>
 						<tr>
-							<td>
-								<input type="checkbox">
-							</td>
-							<td>Todo text goes here</td>
-							<td>
-								<div class="todo-buttons btn-group pull-right" role="group">
-				                    <button type="button" class="btn btn-default btn-xs move-item" data-pk="6" aria-label="Remove">
-				                    	<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-				                    </button>
-				                    <button type="button" class="btn btn-default btn-xs remove-item" data-pk="6" aria-label="Remove">
-				                     	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-				                    </button>
-			                  	</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="checkbox">
-							</td>
-							<td>Todo text goes here</td>
-							<td>
-								<div class="todo-buttons btn-group pull-right" role="group">
-				                    <button type="button" class="btn btn-default btn-xs move-item" data-pk="6" aria-label="Remove">
-				                    	<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-				                    </button>
-				                    <button type="button" class="btn btn-default btn-xs remove-item" data-pk="6" aria-label="Remove">
-				                     	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-				                    </button>
-			                  	</div>
+							<td colspan="3" class="text-center">
+								<strong>{{ remaining.length }} Remaining Tasks</strong>
+								<span v-show="completions.length">|</span>
+								<strong v-show="completions.length">{{ completions.length }} Completed Tasks</strong>
 							</td>
 						</tr>
 					</tbody>
@@ -79,99 +116,6 @@
 		    </div>
 		</div>
 
-		<div id="tasks">
-			
-			<div v-show="remaining.length">
-				<h1>Tasks ({{ remaining.length }})</h1>
-				<ol class="list-group">
-				  <li 
-				  	class="list-group-item" 
-				  	v-repeat="task in tasks | inProcess">
-				  	<input 	
-				  		v-on="click: completeTask(task)"
-				  		type="checkbox" />
-				  	<span v-on="click: editTask(task)">{{ task.body }}</span>
-					<div class="todo-buttons btn-group pull-right" role="group">
-						<button 
-							type="button" 
-							class="btn btn-default btn-xs move-item" 
-							data-pk="6" 
-							aria-label="Remove">
-							<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-						</button>
-						<button 
-							v-on="click: removeTask(task)"
-							type="button" 
-							class="btn btn-default btn-xs remove-item"  
-							data-pk="6" 
-							aria-label="Remove">
-							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-						</button>
-					</div>
-				  </li>
-				</ol>
-			</div>
-
-			<form v-on="submit: addTask">
-				
-				<div class="form-group">
-					<input 	
-						type="text"
-						v-model="newTask"
-						v-el="newTask"
-						class="form-control" 
-						placeholder="I need to..." />
-				</div>
-
-				<button class="btn btn-primary">Add Task</button>
-				<button 
-					v-on="click: completeAll"
-					class="btn btn-default"
-				>Mark All As Complete</button>
-
-			</form>
-
-			<div v-if="completions.length">
-				<h2>Completed ({{ completions.length }})</h2>
-				<ol class="list-group">
-					<li 
-						v-repeat="task in tasks | filterBy true in completed"
-						class="list-group-item"
-					>
-						<input 	
-				  			v-on="click: uncompleteTask(task)"
-				  			type="checkbox" 
-				  			checked="checked" 
-				  		/>
-						{{ task.body }}
-						<div class="todo-buttons btn-group pull-right" role="group">
-							<button 
-								type="button" 
-								class="btn btn-default btn-xs move-item" 
-								data-pk="6" 
-								aria-label="Remove">
-								<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-							</button>
-							<button 
-								v-on="click: removeTask(task)"
-								type="button" 
-								class="btn btn-default btn-xs remove-item"  
-								data-pk="6" 
-								aria-label="Remove">
-								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-							</button>
-						</div>
-					</li>
-				</ol>
-
-				<button 
-					v-on="click: completeCompleted"
-					class="btn btn-danger"
-				>Delete All Completed</button>
-
-			</div>
-
-		</div>
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.10/vue.min.js"></script>
