@@ -11,23 +11,23 @@
 	<div class="container">
 
 		<div class="row" id="tasks">
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-8 col-md-offset-2">
 
 				<h1 class="text-center">ToDo's</h1>
 
 				<form
 				v-on="submit: addTask">
 					<div class="input-group">
-						<input 
-						type="text" 
-						class="form-control" 
-						id="add-todo" 
+						<input
+						type="text"
+						class="form-control"
+						id="add-todo"
 						placeholder="Item Details"
 						v-model="newTask"
 						v-el="newTask">
 						<span class="input-group-btn">
-							<button 
-							class="btn btn-primary" 
+							<button
+							class="btn btn-success"
 							type="submit">Add Item!</button>
 						</span>
 					</div>
@@ -35,35 +35,35 @@
 					<br />
 				</form>
 
-			    <table 
-			    class="table table-striped" 
+			    <table
+			    class="table table-striped"
 			    v-show="remaining.length">
 					<tbody>
 						<tr v-repeat="task in tasks | filterBy false in completed">
 							<td>
-								<input 	
+								<input
 				  				v-on="click: completeTask(task)"
 				  				type="checkbox" />
 								<strong>{{ task.body }}</strong>
 							</td>
 							<td>
 								<div class="todo-buttons pull-right">
-				                    <button 
-				                    type="button" 
-				                    class="btn btn-success btn-xs" 
+				                    <button
+				                    type="button"
+				                    class="btn btn-success btn-xs"
 				                    data-pk="6"
 				                    v-on="click: editTask(task)">
 				                    	<span class="glyphicon glyphicon-pencil"></span>
 				                    </button>
-				                    <button 
-				                    type="button" 
-				                    class="btn btn-primary btn-xs move-item" 
+				                    <button
+				                    type="button"
+				                    class="btn btn-primary btn-xs move-item"
 				                    data-pk="6">
 				                    	<span class="glyphicon glyphicon-menu-hamburger"></span>
 				                    </button>
-				                    <button 
-				                    type="button" 
-				                    class="btn btn-danger btn-xs remove-item" 
+				                    <button
+				                    type="button"
+				                    class="btn btn-danger btn-xs remove-item"
 				                    data-pk="6"
 				                    v-on="click: removeTask(task)">
 				                     	<span class="glyphicon glyphicon-trash"></span>
@@ -81,22 +81,22 @@
 							</td>
 							<td>
 								<div class="todo-buttons pull-right">
-				                    <button 
-				                    type="button" 
-				                    class="btn btn-success btn-xs" 
+				                    <button
+				                    type="button"
+				                    class="btn btn-success btn-xs"
 				                    data-pk="6"
 				                    v-on="click: editTask(task)">
 				                    	<span class="glyphicon glyphicon-pencil"></span>
 				                    </button>
-				                    <button 
-				                    type="button" 
-				                    class="btn btn-primary btn-xs move-item" 
+				                    <button
+				                    type="button"
+				                    class="btn btn-primary btn-xs move-item"
 				                    data-pk="6">
 				                    	<span class="glyphicon glyphicon-menu-hamburger"></span>
 				                    </button>
-				                    <button 
-				                    type="button" 
-				                    class="btn btn-danger btn-xs remove-item" 
+				                    <button
+				                    type="button"
+				                    class="btn btn-danger btn-xs remove-item"
 				                    data-pk="6"
 				                    v-on="click: removeTask(task)">
 				                     	<span class="glyphicon glyphicon-trash"></span>
@@ -104,15 +104,13 @@
 			                  	</div>
 							</td>
 						</tr>
-						<tr>
-							<td colspan="3" class="text-center">
-								<strong>{{ remaining.length }} Remaining Tasks</strong>
-								<span v-show="completions.length">|</span>
-								<strong v-show="completions.length">{{ completions.length }} Completed Tasks</strong>
-							</td>
-						</tr>
 					</tbody>
 			    </table>
+				<div class="row text-center" v-show="remaining.length">
+					<span class="text-muted">{{ remaining.length }} Remaining Tasks</span>
+					<span v-show="completions.length">|</span>
+					<span class="text-muted" v-show="completions.length">{{ completions.length }} Completed Tasks</span>
+				</div>
 		    </div>
 		</div>
 

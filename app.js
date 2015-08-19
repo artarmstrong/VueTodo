@@ -28,6 +28,7 @@ new Vue({
 				completed: false
 			});
 			this.newTask = '';
+			this.$$.newTask.focus();
 		},
 		editTask: function(task) {
 			this.removeTask(task);
