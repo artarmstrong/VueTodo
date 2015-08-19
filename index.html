@@ -9,6 +9,76 @@
 <body>
 
 	<div class="container">
+
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				<h1 class="text-center">ToDo's</h1>
+
+				<div class="input-group">
+					<input type="text" class="form-control" id="add-todo" placeholder="Item Details">
+					<span class="input-group-btn">
+						<button class="btn btn-primary" id="add-todo-submit" type="button">Add Item!</button>
+					</span>
+				</div>
+
+				<br />
+
+			    <table class="table table-striped">
+					<tbody>
+						<tr>
+							<td>
+								<input type="checkbox">
+							</td>
+							<td>Todo text goes here</td>
+							<td>
+								<div class="todo-buttons btn-group pull-right" role="group">
+				                    <button type="button" class="btn btn-default btn-xs move-item" data-pk="6" aria-label="Remove">
+				                    	<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+				                    </button>
+				                    <button type="button" class="btn btn-default btn-xs remove-item" data-pk="6" aria-label="Remove">
+				                     	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				                    </button>
+			                  	</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox">
+							</td>
+							<td>Todo text goes here</td>
+							<td>
+								<div class="todo-buttons btn-group pull-right" role="group">
+				                    <button type="button" class="btn btn-default btn-xs move-item" data-pk="6" aria-label="Remove">
+				                    	<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+				                    </button>
+				                    <button type="button" class="btn btn-default btn-xs remove-item" data-pk="6" aria-label="Remove">
+				                     	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				                    </button>
+			                  	</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox">
+							</td>
+							<td>Todo text goes here</td>
+							<td>
+								<div class="todo-buttons btn-group pull-right" role="group">
+				                    <button type="button" class="btn btn-default btn-xs move-item" data-pk="6" aria-label="Remove">
+				                    	<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+				                    </button>
+				                    <button type="button" class="btn btn-default btn-xs remove-item" data-pk="6" aria-label="Remove">
+				                     	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				                    </button>
+			                  	</div>
+							</td>
+						</tr>
+					</tbody>
+			    </table>
+		    </div>
+		</div>
+
 		<div id="tasks">
 			
 			<div v-show="remaining.length">
